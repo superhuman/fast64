@@ -1,0 +1,24 @@
+<meta charset="utf-8">
+<style>
+  @import url(../node_modules/mocha/mocha.css);
+</style>
+<script src="../node_modules/mocha/mocha.js"></script>
+<script src="../node_modules/chai/chai.js"></script>
+<script>
+  module = {}
+</script>
+<script src="../index.js"></script>
+<script>
+  Base64 = module.exports;
+
+  mocha.setup({ignoreLeaks: true, ui: "bdd"});
+  expect = chai.expect;
+</script>
+<script src="test.js"></script>
+
+<div id="mocha"></div>
+
+<script>
+  mocha.run();
+</script>
+

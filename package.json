@@ -1,0 +1,12 @@
+{
+  "name": "fast64",
+  "version": "0.3.0",
+  "license": "Apache",
+  "repository": "https://github.com/ConradIrwin/fast64",
+  "main": "index.js",
+  "description":"The fastest in-browser base64 library",
+  "devDependencies": {
+    "chai": "^3.4.1",
+    "mocha": "^2.3.4"
+  }
+}
