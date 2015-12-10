@@ -31,7 +31,7 @@ var B64 = {
         var buffer = B64.toUtf8(s),
             position = -1,
             result,
-            len = buffer.length,
+            len,
             nan0, nan1, nan2;
 
         if (!B64.rlookup) {
@@ -42,7 +42,9 @@ var B64 = {
             position = -1;
         }
 
-        result = new Uint8Array(new ArrayBuffer(Math.ceil(buffer.length / 3) * 4));
+        len = buffer.length;
+
+        result = new Uint8Array(new ArrayBuffer(Math.ceil(len / 3) * 4));
         var i = 0;
 
         while (++position < len) {
