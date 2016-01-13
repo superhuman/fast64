@@ -63,7 +63,7 @@ var B64 = {
         }
         return new TextDecoder("utf8").decode(result);
     },
-    decode: function (s) {
+    decode: function (s, options) {
         /* jshint bitwise:false */
         s = s.replace(/\s/g, '');
         if (s.length % 4) {
@@ -73,12 +73,12 @@ var B64 = {
             throw new Error('InvalidCharacterError: decode failed: The string contains characters invalid in a base64 encoded string.');
         }
 
-        return B64.decodeCommon(s);
+        return B64.decodeCommon(s, options);
     },
     toUtf8: function (s) {
         return new TextEncoder("utf8").encode(s);
     },
-    decodeCommon: function (s) {
+    decodeCommon: function (s, options) {
         /* jshint bitwise:false */
         var position = -1,
             array = new ArrayBuffer(s.length / 4 * 3),
@@ -110,12 +110,19 @@ var B64 = {
                 break;
             buffer[i++] = ((enc[2] & 3) << 6) | enc[3];
         }
-        return new TextDecoder("utf8").decode(new Uint8Array(array, 0, i));
+
+        var uint8Array = new Uint8Array(array, 0, i);
+
+        if (options && options.uint8Array) {
+            return uint8Array;
+        }
+
+        return new TextDecoder("utf8").decode(uint8Array);
     }
 };
 
 var B64url = {
-    decode: function(input) {
+    decode: function(input, options) {
         // Pad out with standard base64 required padding characters
         var pad = input.length % 4;
         if(pad) {
@@ -129,7 +136,7 @@ var B64url = {
             throw new Error('InvalidCharacterError: urldecode failed: The string contains characters invalid in a base64 encoded string.');
         }
 
-        return B64.decodeCommon(input);
+        return B64.decodeCommon(input, options);
     },
 
     encode: function(input) {
