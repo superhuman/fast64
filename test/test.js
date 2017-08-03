@@ -14,6 +14,10 @@ describe("encode", function () {
     it("should work on emoji", function () {
         expect(Base64.encode("💓")).to.equal("8J+Skw==");
     });
+
+    it('should encode uint8 arrays', function () {
+      expect(Base64.encode(new Uint8Array([0x89, 0x50, 0x4e, 0x47, 0x00]))).to.equal('iVBORwA=')
+    })
 });
 
 describe("decode", function () {
