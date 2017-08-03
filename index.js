@@ -28,7 +28,7 @@ var B64 = {
     rlookup: null,
     encode: function (s) {
         /* jshint bitwise:false */
-        var buffer = B64.toUtf8(s),
+        var buffer = typeof s === 'string' ? B64.toUtf8(s) : s,
             position = -1,
             result,
             len,
