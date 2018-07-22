@@ -84,7 +84,7 @@ var B64 = {
             array = new ArrayBuffer(s.length / 4 * 3),
             len, buffer = new Uint8Array(array),
             i = 0,
-            enc = [, , , ];
+            enc0, enc1, enc2, enc3;
 
         if (!B64.lookup) {
             len = B64.alphabet.length;
@@ -98,17 +98,17 @@ var B64 = {
 
         len = s.length;
         while (++position < len) {
-            enc[0] = B64.lookup[s.charCodeAt(position)];
-            enc[1] = B64.lookup[s.charCodeAt(++position)];
-            buffer[i++] = (enc[0] << 2) | (enc[1] >> 4);
-            enc[2] = B64.lookup[s.charCodeAt(++position)];
-            if (enc[2] === 64)
+            enc0 = B64.lookup[s.charCodeAt(position)];
+            enc1 = B64.lookup[s.charCodeAt(++position)];
+            buffer[i++] = (enc0 << 2) | (enc1 >> 4);
+            enc2 = B64.lookup[s.charCodeAt(++position)];
+            if (enc2 === 64)
                 break;
-            buffer[i++] = ((enc[1] & 15) << 4) | (enc[2] >> 2);
-            enc[3] = B64.lookup[s.charCodeAt(++position)];
-            if (enc[3] === 64)
+            buffer[i++] = ((enc1 & 15) << 4) | (enc2 >> 2);
+            enc3 = B64.lookup[s.charCodeAt(++position)];
+            if (enc3 === 64)
                 break;
-            buffer[i++] = ((enc[2] & 3) << 6) | enc[3];
+            buffer[i++] = ((enc2 & 3) << 6) | enc3;
         }
 
         var uint8Array = new Uint8Array(array, 0, i);
