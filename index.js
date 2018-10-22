@@ -24,21 +24,16 @@
  */
 var B64 = {
   alphabet: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=',
-  lookup: null,
-  rlookup: null,
+  // rlookup was created using B64.buildRlookup()
+  rlookup: [65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 43, 47, 61],
+  // lookup was created using B64.buildLookup()
+  lookup: [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 62, null, 62, null, 63, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, null, null, null, 64, null, null, null, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, null, null, null, null, 63, null, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, null, null],
   encode: function (s) {
     var buffer = typeof s === 'string' ? B64.toUtf8(s) : s
     var position = -1
     var result
     var len
     var nan0, nan1, nan2
-
-    if (!B64.rlookup) {
-      B64.rlookup = new Array(125)
-      len = B64.alphabet.length
-      while (++position < len) { B64.rlookup[position] = B64.alphabet.charCodeAt(position) }
-      position = -1
-    }
 
     len = buffer.length
 
@@ -75,6 +70,24 @@ var B64 = {
   toUtf8: function (s) {
     return new TextEncoder('utf8').encode(s)
   },
+  buildRlookup: function () {
+    if (!B64.rlookup) {
+      var position = -1
+      var len = B64.alphabet.length
+      B64.rlookup = new Array(125)
+      while (++position < len) { B64.rlookup[position] = B64.alphabet.charCodeAt(position) }
+    }
+  },
+  buildLookup: function () {
+    if (!B64.lookup) {
+      var position = -1
+      var len = B64.alphabet.length
+      B64.lookup = new Array(125)
+      B64.lookup['-'.charCodeAt(0)] = 62
+      B64.lookup['_'.charCodeAt(0)] = 63
+      while (++position < len) { B64.lookup[B64.alphabet.charCodeAt(position)] = position }
+    }
+  },
   decodeCommon: function (s, options) {
     var position = -1
     var array = new ArrayBuffer(s.length / 4 * 3)
@@ -82,15 +95,6 @@ var B64 = {
     var buffer = new Uint8Array(array)
     var i = 0
     var enc0, enc1, enc2, enc3
-
-    if (!B64.lookup) {
-      len = B64.alphabet.length
-      B64.lookup = new Array(125)
-      B64.lookup['-'.charCodeAt(0)] = 62
-      B64.lookup['_'.charCodeAt(0)] = 63
-      while (++position < len) { B64.lookup[B64.alphabet.charCodeAt(position)] = position }
-      position = -1
-    }
 
     len = s.length
     while (++position < len) {
