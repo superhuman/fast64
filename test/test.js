@@ -19,6 +19,24 @@ describe('Fast64', function () {
     it('should encode uint8 arrays', function () {
       expect(Base64.encode(new Uint8Array([0x89, 0x50, 0x4e, 0x47, 0x00]))).to.equal('iVBORwA=')
     })
+
+    it('should be atleast 100% faster than encodeUsingBTOA', function () {
+      let start = performance.now()
+      let i = 0
+      while (i < 1000) {
+        expect(Base64.encode(html)).to.equal(encoded)
+        i++
+      }
+      let startIntermediate = performance.now()
+      i = 0
+      while (i < 1000) {
+        expect(window.encodeUsingBTOA(html)).to.equal(encoded)
+        i++
+      }
+      let encodeTime = startIntermediate - start
+      let encodeUsingBTOATime = performance.now() - startIntermediate
+      expect(encodeUsingBTOATime / 2).to.be.above(encodeTime)
+    })
   })
 
   describe('decode', function () {
@@ -39,6 +57,24 @@ describe('Fast64', function () {
       expect(result instanceof Uint8Array).to.equal(true)
       expect(result[0]).to.equal(104)
       expect(result[1]).to.equal(105)
+    })
+
+    it('should be atleast 100% faster than decodeUsingATOB', function () {
+      let start = performance.now()
+      let i = 0
+      while (i < 1000) {
+        expect(Base64.decode(encoded)).to.equal(html)
+        i++
+      }
+      let startIntermediate = performance.now()
+      i = 0
+      while (i < 1000) {
+        expect(window.decodeUsingATOB(encoded)).to.equal(html)
+        i++
+      }
+      let decodeTime = startIntermediate - start
+      let decodeUsingATOBTime = performance.now() - startIntermediate
+      expect(decodeUsingATOBTime / 2).to.be.above(decodeTime)
     })
   })
 
