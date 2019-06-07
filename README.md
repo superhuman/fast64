@@ -47,5 +47,5 @@ If you want to develop this package, you can run the tests in-browser:
 
 ```
 npm install
-open test/test.html
+open test/index.html
 ```
