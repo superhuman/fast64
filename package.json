@@ -7,7 +7,7 @@
   "description": "The fastest in-browser base64 library",
   "devDependencies": {
     "chai": "^3.4.1",
-    "mocha": "^5.2.0"
+    "mocha": "^10.1.0"
   },
   "standard": {
     "ignore": [],
