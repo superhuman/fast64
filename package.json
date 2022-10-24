@@ -1,6 +1,6 @@
 {
   "name": "@superhuman/fast64",
-  "version": "0.7.2",
+  "version": "0.7.3",
   "license": "Apache",
   "repository": "https://github.com/ConradIrwin/fast64",
   "main": "index.js",
