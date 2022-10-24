@@ -1,13 +1,13 @@
 {
   "name": "@superhuman/fast64",
-  "version": "0.7.2",
+  "version": "0.7.3",
   "license": "Apache",
   "repository": "https://github.com/ConradIrwin/fast64",
   "main": "index.js",
   "description": "The fastest in-browser base64 library",
   "devDependencies": {
     "chai": "^3.4.1",
-    "mocha": "^5.2.0"
+    "mocha": "^10.1.0"
   },
   "standard": {
     "ignore": [],
