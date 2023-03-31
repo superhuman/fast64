@@ -1,4 +1,9 @@
+!This package is deprecated!
 
+At Superhuman, we now use https://github.com/beatgammit/base64-js, which is *much* faster.
+
+
+----
 This immodestly claims to be the fastest in-browser utf-8 safe Base64
 decoding library. If you can beat it in the latest version of Chrome, please
 send a pull request :).
